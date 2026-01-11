@@ -7,24 +7,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, profile, signOut } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const handleScrollTop = () => {
+    window.scrollTo(0, 0);
+    setIsOpen(false);
+  };
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await logout();
       navigate('/');
+      window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error signing out:', error);
     }
   };
 
   return (
-    <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <nav className="bg-slate-100 border border-slate-200 sticky top-2 z-50 w-[calc(100%-2rem)] max-w-7xl mx-auto rounded-full shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2" onClick={handleScrollTop}>
               <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-2 rounded-lg">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
@@ -35,19 +41,19 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/courses">
+            <Link to={user ? "/courses" : "/login"} onClick={() => window.scrollTo(0, 0)}>
               <Button variant="ghost">Courses</Button>
             </Link>
 
             {user ? (
               <>
-                <Link to={profile?.role === 'admin' ? '/admin' : '/dashboard'}>
+                <Link to={user?.role === 'admin' ? '/admin' : '/dashboard'} onClick={() => window.scrollTo(0, 0)}>
                   <Button variant="ghost">
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Dashboard
                   </Button>
                 </Link>
-                <Link to="/profile">
+                <Link to="/profile" onClick={() => window.scrollTo(0, 0)}>
                   <Button variant="ghost">
                     <User className="h-4 w-4 mr-2" />
                     Profile
@@ -60,11 +66,11 @@ export function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/login">
+                <Link to="/login" onClick={() => window.scrollTo(0, 0)}>
                   <Button variant="ghost">Login</Button>
                 </Link>
-                <Link to="/register">
-                  <Button className="bg-gradient-to-r from-blue-600 to-blue-700">
+                <Link to="/register" onClick={() => window.scrollTo(0, 0)}>
+                  <Button className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-full">
                     Get Started
                   </Button>
                 </Link>
@@ -89,7 +95,7 @@ export function Navbar() {
             className="md:hidden border-t border-slate-200"
           >
             <div className="px-4 pt-2 pb-4 space-y-2">
-              <Link to="/courses" onClick={() => setIsOpen(false)}>
+              <Link to={user ? "/courses" : "/login"} onClick={handleScrollTop}>
                 <Button variant="ghost" className="w-full justify-start">
                   Courses
                 </Button>
@@ -97,32 +103,32 @@ export function Navbar() {
 
               {user ? (
                 <>
-                  <Link to={profile?.role === 'admin' ? '/admin' : '/dashboard'} onClick={() => setIsOpen(false)}>
+                  <Link to={user?.role === 'admin' ? '/admin' : '/dashboard'} onClick={handleScrollTop}>
                     <Button variant="ghost" className="w-full justify-start">
                       <LayoutDashboard className="h-4 w-4 mr-2" />
                       Dashboard
                     </Button>
                   </Link>
-                  <Link to="/profile" onClick={() => setIsOpen(false)}>
+                  <Link to="/profile" onClick={handleScrollTop}>
                     <Button variant="ghost" className="w-full justify-start">
                       <User className="h-4 w-4 mr-2" />
                       Profile
                     </Button>
                   </Link>
-                  <Button variant="outline" className="w-full justify-start" onClick={handleSignOut}>
+                  <Button variant="outline" className="w-full justify-start" onClick={() => { handleSignOut(); setIsOpen(false); }}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Sign Out
                   </Button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" onClick={() => setIsOpen(false)}>
+                  <Link to="/login" onClick={handleScrollTop}>
                     <Button variant="ghost" className="w-full justify-start">
                       Login
                     </Button>
                   </Link>
-                  <Link to="/register" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700">
+                  <Link to="/register" onClick={handleScrollTop}>
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full">
                       Get Started
                     </Button>
                   </Link>
