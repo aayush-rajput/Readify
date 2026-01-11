@@ -36,6 +36,12 @@ Readify has been successfully updated to a **Smart Classroom Platform** (Google 
   - Connected `Login` and `Register` pages to the real backend.
   - Verified Landing Page and Login Flow.
 
+### 5. UI Refinements (Glass & Global Theme)
+- **Glass Card Architecture:** Implemented translucent background effects for Hero section content.
+- **Floating Navigation:** Refined Navbar to a floating "pill" style for modern aesthetics.
+- **Global Theme:** Unified application background with Sky Blue palette (`bg-sky-100`).
+- **Interactive Polish:** Added scroll-to-top behaviors and smooth transitions.
+
 ## 🔜 Next Steps (Phase 2)
 - Structured Course Delivery (Schema & APIs).
 - Assignment Creation & Submission workflow.

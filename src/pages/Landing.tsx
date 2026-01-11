@@ -1,150 +1,174 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, Brain, Layout, Highlighter, FileText, Activity, GraduationCap, User, Library } from 'lucide-react';
+import { BookOpen, Brain, Layout, CheckCircle, Smartphone, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+
+// Animation variants
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+
+};
 
 export function Landing() {
   return (
-    <div className="min-h-screen bg-sky-100">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-sky-100">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block"
-          >
-            <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-white/20">
-              <h1 className="text-5xl md:text-7xl font-bold text-slate-900 tracking-tight mb-8">
-                Read. Organize. Understand<br />
-                <span className="text-slate-600">in One Place.</span>
-              </h1>
+    <div className="flex flex-col min-h-screen">
 
-              <p className="text-xl md:text-2xl text-slate-700 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                Your AI-powered study workspace that combines structured reading,
-                an intelligent notebook, and classroom organization.
-              </p>
+      {/* HERO SECTION */}
+      <section className="relative bg-primary pt-20 pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            {/* Hero Text */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+              className="text-center lg:text-left"
+            >
+              <motion.h1
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-6"
+              >
+                Readify <br />
+                <span className="text-secondary">AI-Enabled Smart Classroom</span>
+              </motion.h1>
+              <motion.p
+                variants={fadeInUp}
+                className="text-lg md:text-xl text-gray-300 mb-8 font-light max-w-2xl mx-auto lg:mx-0"
+              >
+                A comprehensive learning platform for structured course delivery, assignments,
+                and classroom management. Built for seamless student–teacher interaction.
+              </motion.p>
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              >
                 <Link to="/register">
-                  <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white text-lg px-8 py-6 h-auto rounded-full shadow-lg hover:shadow-xl transition-all">
-                    Create Your Study Space
+                  <Button variant="secondary" size="lg" className="text-primary font-bold w-full sm:w-auto">
+                    Get Started Free
                   </Button>
                 </Link>
-                <Link to="#how-it-works">
-                  <Button variant="ghost" size="lg" className="text-slate-700 hover:text-slate-900 text-lg px-8 py-6 h-auto">
-                    See How It Works <ArrowRight className="ml-2 h-5 w-5" />
+                <Link to="/courses">
+                  <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary w-full sm:w-auto">
+                    Explore Courses
                   </Button>
                 </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Hero Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
+                <img
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop"
+                  alt="Students learning"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
               </div>
-            </div>
-          </motion.div>
+              {/* Floating Badge */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1, duration: 0.5 }}
+                className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg flex items-center gap-3 max-w-xs"
+              >
+                <div className="bg-blue-100 p-2 rounded-full">
+                  <Brain className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">AI Powered</p>
+                  <p className="text-sm text-gray-500">Smart content summaries</p>
+                </div>
+              </motion.div>
+            </motion.div>
 
-
+          </div>
         </div>
       </section>
 
-      {/* Why Readify? */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-sky-50 border-t border-sky-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-16">Why Readify?</h2>
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              { title: "Notebook-style AI", desc: "LLM intelligence embedded directly into your notes and reading materials." },
-              { title: "Classroom Structure", desc: "Organize modules, topics, and resources just like Google Classroom." },
-              { title: "Reading-First", desc: "Focus on deep understanding through text, not passive video consumption." }
-            ].map((item, i) => (
-              <div key={i} className="space-y-4">
-                <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-                <p className="text-slate-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+      {/* FEATURES SECTION */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+              Modernize your <span className="text-yellow-500 underline decoration-yellow-300/50">learning experience</span>
+            </h2>
+            <p className="text-xl text-gray-600">
+              Transforming education with AI assistance and structured management.
+            </p>
           </div>
-        </div>
-      </section >
 
-      {/* How It Works */}
-      < section className="py-24 px-4 sm:px-6 lg:px-8 bg-sky-100" id="how-it-works" >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {[
-              { icon: BookOpen, title: "Read", desc: "Import content and highlight key concepts." },
-              { icon: Brain, title: "Ask & Organize", desc: "Ask AI for explanations and structure your notes." },
-              { icon: GraduationCap, title: "Understand", desc: "Master the material through active engagement." }
-            ].map((step, i) => (
-              <Card key={i} className="border-0 shadow-sm bg-white/50 hover:bg-white transition-colors">
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className="w-16 h-16 mx-auto bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900">
-                    <step.icon className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">{step.title}</h3>
-                  <p className="text-slate-500">{step.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section >
-
-      {/* Core Features */}
-      < section className="py-24 px-4 sm:px-6 lg:px-8 bg-sky-50" >
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-16 text-center">Core Features</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {[
-              { icon: Highlighter, title: "Smart Reading", desc: "Highlight text and get instant context-aware insights." },
-              { icon: Brain, title: "Inline AI Explanations", desc: "Chat with an AI that understands your specific course material." },
-              { icon: Layout, title: "Structured Classrooms", desc: "Keep every module, topic, and reading organized." },
-              { icon: FileText, title: "Connected Notes", desc: "Your notes live right next to your content, linked forever." },
-              { icon: Activity, title: "Progress Tracking", desc: "Visualize your journey through complex topics." },
-              { icon: Library, title: "Resource Library", desc: "Centralize all your PDFs, articles, and references." }
+              { icon: Layout, title: "Structured Delivery", desc: "Organize modules, topics, and resources effectively." },
+              { icon: CheckCircle, title: "Assignments", desc: "Create, submit, and grade assignments seamlessly." },
+              { icon: Brain, title: "AI Integration", desc: "Generate summaries and explanations from learning materials." },
+              { icon: Users, title: "Role-Based Access", desc: "Dedicated portals for Students and Instructors." },
+              { icon: BookOpen, title: "Resource Hub", desc: "Manage videos, PDFs, and reading materials in one place." },
+              { icon: Smartphone, title: "Responsive Design", desc: "Access your classroom from any device, anywhere." }
             ].map((feature, i) => (
-              <div key={i} className="flex gap-4 items-start">
-                <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
-                  <feature.icon className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{feature.title}</h3>
-                  <p className="text-slate-500">{feature.desc}</p>
-                </div>
-              </div>
+              <motion.div key={i} variants={fadeInUp}>
+                <Card className="h-full border-none shadow-sm bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                  <CardContent className="p-8">
+                    <div className="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                      <feature.icon className="w-7 h-7 text-primary group-hover:text-white transition-colors" />
+                    </div>
+                    <h3 className="text-xl font-bold text-primary mb-3">{feature.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {feature.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA SECTION */}
+      <section className="py-24 bg-secondary">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-6">
+            Ready to transform your classroom?
+          </h2>
+          <p className="text-xl text-primary/80 mb-10 max-w-2xl mx-auto">
+            Join the future of education with AI-enabled learning today.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/register">
+              <Button className="bg-primary text-white hover:bg-primary/90 text-lg px-10 py-6 h-auto rounded-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all">
+                Get Started Now
+              </Button>
+            </Link>
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* Who It's For */}
-      < section className="py-24 px-4 sm:px-6 lg:px-8 bg-sky-100" >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-16">Built For Deep Workers</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: GraduationCap, label: "College Students" },
-              { icon: FileText, label: "Exam Prep Learners" },
-              { icon: User, label: "Self-Learners" }
-            ].map((persona, i) => (
-              <div key={i} className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                <persona.icon className="w-10 h-10 mx-auto text-slate-900 mb-4" />
-                <div className="font-medium text-slate-700">{persona.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section >
-
-      {/* Footer CTA */}
-      < section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-sky-200 bg-sky-50 text-center" >
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8">
-          Ready to focus?
-        </h2>
-        <Link to="/register">
-          <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white text-lg px-12 py-6 h-auto rounded-full">
-            Create Your Study Space
-          </Button>
-        </Link>
-      </section >
-    </div >
+    </div>
   );
 }
