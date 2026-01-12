@@ -22,7 +22,7 @@ interface Enrollment {
 }
 
 export function StudentDashboard() {
-  const { profile } = useAuth();
+  const { user } = useAuth();
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -90,7 +90,7 @@ export function StudentDashboard() {
     <div className="min-h-screen bg-slate-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Welcome back, {profile?.full_name}!</h1>
+          <h1 className="text-3xl font-bold text-slate-900">Welcome back, {user?.name}!</h1>
           <p className="text-slate-600 mt-2">Continue your learning journey</p>
         </div>
 
