@@ -2,7 +2,11 @@
 
 Readify is a Google Classroom–like Smart Classroom platform designed to revolutionize structured course delivery and assignment management. Built with a modern tech stack, it emphasizes seamless student-teacher interaction, robust workflow management, and AI-powered learning assistance.
 
+ HEAD
 ##  Tech Stack
+
+## Tech Stack
+8453a79760606f45b5e4e33eb911efd8398f543e
 
 - **Frontend:** React (Vite)
 - **Backend:** Node.js, Express
@@ -11,7 +15,11 @@ Readify is a Google Classroom–like Smart Classroom platform designed to revolu
 
 ##  Key Features
 
+ HEAD
 ###  Structured Course Delivery
+
+### Structured Course Delivery
+8453a79760606f45b5e4e33eb911efd8398f543e
 - Organized curriculum management
 - Module-based learning paths
 - Rich media content support
@@ -21,7 +29,11 @@ Readify is a Google Classroom–like Smart Classroom platform designed to revolu
 - Gradebook and feedback systems
 - Deadline tracking and notifications
 
+ HEAD
 ###  Student–Teacher Roles & Access Control
+
+### Student–Teacher Roles & Access Control
+ 8453a79760606f45b5e4e33eb911efd8398f543e
 - Distinct dashboards for Students and Teachers
 - granular permission capabilities
 - Secure authentication and role management
@@ -31,6 +43,7 @@ Readify is a Google Classroom–like Smart Classroom platform designed to revolu
 - **Instant Explanations:** AI-generated explanations for complex topics
 - **Content Analysis:** Intelligent insights from course resources
 
+ HEAD
 
    npm run build
    ```
@@ -76,3 +89,5 @@ Readify has been successfully updated to a **Smart Classroom Platform** (Google 
 - Structured Course Delivery (Schema & APIs).
 - Assignment Creation & Submission workflow.
 - Teacher Dashboard implementation.
+
+ 8453a79760606f45b5e4e33eb911efd8398f543e

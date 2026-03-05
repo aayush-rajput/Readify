@@ -13,7 +13,7 @@ import { CourseDetail } from '@/pages/CourseDetail';
 import { LessonViewer } from '@/pages/LessonViewer';
 import { Profile } from '@/pages/Profile';
 import { AdminDashboard } from '@/pages/AdminDashboard';
-import { AdminCourseManagement } from '@/pages/AdminCourseManagement';
+import { InstructorDashboard } from '@/pages/InstructorDashboard';
 import { AdminUserManagement } from '@/pages/AdminUserManagement';
 import './App.css';
 
@@ -68,21 +68,17 @@ function App() {
               />
 
               <Route
-                path="/admin/courses"
+                path="/dashboard/instructor/*"
                 element={
                   <ProtectedRoute requireAdmin>
-                    <AdminCourseManagement />
+                    <InstructorDashboard />
                   </ProtectedRoute>
                 }
               />
 
               <Route
-                path="/admin/users"
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <AdminUserManagement />
-                  </ProtectedRoute>
-                }
+                path="/admin/courses"
+                element={<Navigate to="/dashboard/instructor" replace />}
               />
 
               <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,20 +1,22 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../lib/api';
+import { supabase } from '../lib/supabase';
+import { toast } from 'sonner';
 
 interface User {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   role: 'student' | 'teacher' | 'admin';
-  token?: string;
+  avatar?: string;
+  bio?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (userData: User) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, name: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string, role?: 'student' | 'teacher') => Promise<void>;
   isLoading: boolean;
 }
 
@@ -25,37 +27,90 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        fetchProfile(session.user.id, session.user.email!);
+      } else {
+        setIsLoading(false);
+      }
+    });
 
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    // Listen for changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        fetchProfile(session.user.id, session.user.email!);
+      } else {
+        setUser(null);
+        setIsLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
+  const fetchProfile = async (userId: string, email: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setUser({
+          id: data.id,
+          name: data.name,
+          email: data.email || email,
+          role: data.role as 'student' | 'teacher' | 'admin',
+          avatar: data.avatar,
+          bio: data.bio
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Helper for manual state updates if needed (mostly handled by effect now)
   const login = (userData: User) => {
     setUser(userData);
-    if (userData.token) {
-      localStorage.setItem('token', userData.token);
-    }
-    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const signIn = async (email: string, password: string) => {
-    const { data } = await api.post('/auth/login', { email, password });
-    login(data);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
   };
 
-  const signUp = async (email: string, password: string, name: string) => {
-    const { data } = await api.post('/auth/register', { email, password, name, role: 'student' }); // Default role student
-    login(data);
+  const signUp = async (email: string, password: string, name: string, role: 'student' | 'teacher' = 'student') => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+          role,
+        },
+      },
+    });
+
+    if (error) throw error;
+
+    if (data.user) {
+      toast.success('Account created! Please sign in.');
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
   };
 
   return (

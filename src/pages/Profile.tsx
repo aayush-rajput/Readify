@@ -11,9 +11,9 @@ import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
 export function Profile() {
-  const { profile, user } = useAuth();
-  const [fullName, setFullName] = useState(profile?.full_name || '');
-  const [bio, setBio] = useState(profile?.bio || '');
+  const { user } = useAuth();
+  const [fullName, setFullName] = useState(user?.name || '');
+  const [bio, setBio] = useState(user?.bio || '');
   const [loading, setLoading] = useState(false);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -24,9 +24,9 @@ export function Profile() {
       const { error } = await supabase
         .from('profiles')
         .update({
-          full_name: fullName,
+          name: fullName,
           bio: bio,
-          updated_at: new Date().toISOString(),
+          // updated_at: new Date().toISOString(), // Supabase might handle this or we enable it
         })
         .eq('id', user?.id);
 
@@ -63,13 +63,13 @@ export function Profile() {
                 <div className="text-center">
                   <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
                     <span className="text-5xl text-white font-bold">
-                      {profile?.full_name?.charAt(0).toUpperCase()}
+                      {user?.name?.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                  <h2 className="text-xl font-bold text-slate-900 mb-1">{profile?.full_name}</h2>
+                  <h2 className="text-xl font-bold text-slate-900 mb-1">{user?.name}</h2>
                   <p className="text-sm text-slate-600 mb-4">{user?.email}</p>
                   <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
-                    {profile?.role === 'admin' ? 'Administrator' : 'Student'}
+                    {user?.role === 'admin' ? 'Administrator' : 'Student'}
                   </div>
                 </div>
               </CardContent>
