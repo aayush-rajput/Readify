@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 interface UserProfile {
   id: string;
-  full_name: string;
+  name: string;
   role: string;
   bio?: string;
   created_at: string;
@@ -54,7 +54,7 @@ export function AdminUserManagement() {
 
     const filtered = users.filter(
       (user) =>
-        user.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         user.email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -165,10 +165,10 @@ export function AdminUserManagement() {
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold">
-                          {user.full_name.charAt(0).toUpperCase()}
+                          {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <h4 className="font-semibold text-slate-900">{user.full_name}</h4>
+                          <h4 className="font-semibold text-slate-900">{user.name}</h4>
                           <p className="text-sm text-slate-600">{user.email || 'No email'}</p>
                           {user.bio && (
                             <p className="text-sm text-slate-500 mt-1 line-clamp-1">{user.bio}</p>
